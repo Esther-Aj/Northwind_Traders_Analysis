@@ -29,6 +29,5 @@ It contains the following tables:
 To give Northwind traders a better undestanding of their operations, it is best to carry out an Exploratory Data Analysis (EDA) using SQL
 
 ### List of products per unit quantity
-(SELECT ProductName, QuantityPerUnit
-FROM Products)
+[(https://github.com/Esther-Aj/Northwind_Traders_Analysis/blob/f8ea1d2bf8c950067bc24ea217b4ffd8d1dc9af3/Northwind#L5-L6C14)https://github.com/Esther-Aj/Northwind_Traders_Analysis/blob/f8ea1d2bf8c950067bc24ea217b4ffd8d1dc9af3/Northwind#L5-L6C14](https://github.com/Esther-Aj/Northwind_Traders_Analysis/blob/f8ea1d2bf8c950067bc24ea217b4ffd8d1dc9af3/Northwind#L5-L6C14)https://github.com/Esther-Aj/Northwind_Traders_Analysis/blob/f8ea1d2bf8c950067bc24ea217b4ffd8d1dc9af3/Northwind#L5-L6C14
 

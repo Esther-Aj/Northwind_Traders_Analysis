@@ -1,0 +1,114 @@
+SELECT *
+FROM Products
+
+--1 Product name and qty per unit
+SELECT ProductName, QuantityPerUnit
+FROM Products
+
+--2 Current product list( product id and name)
+SELECT ProductID, ProductName
+FROM Products
+WHERE Discontinued = 0
+ORDER BY ProductID
+
+--3 Discontinued product list(product id and name)
+SELECT ProductID, ProductName
+FROM Products
+WHERE Discontinued = 1
+
+--4 Most expensive and least expensive product
+
+SELECT 'Most expensive',  ProductName, UnitPrice
+FROM Products
+WHERE UnitPrice = (SELECT  MAX(UnitPrice)
+FROM Products)
+UNION
+SELECT 'Least expensive' AS category ,ProductName, UnitPrice
+FROM Products
+WHERE UnitPrice = (SELECT  MIN(UnitPrice)
+FROM Products)
+ORDER BY UnitPrice DESC
+
+
+--5 Products that cost less than $20
+SELECT  ProductId, ProductName, UnitPrice
+FROM Products
+WHERE UnitPrice < 20
+
+--6 Products between $15 and $25
+SELECT ProductId, ProductName, UnitPrice
+FROM Products
+WHERE UnitPrice BETWEEN 15 AND 25
+ORDER BY UnitPrice;
+
+--7 Products above average price
+SELECT ProductName, UnitPrice
+FROM Products
+WHERE UnitPrice > (
+    SELECT AVG(UnitPrice)
+    FROM Products
+    )
+ORDER BY UnitPrice;
+
+--8 Ten most expensive products
+SELECT TOP 10 ProductName, UnitPrice
+FROM Products
+ORDER BY UnitPrice DESC;
+
+--9 Current and discontinued products
+SELECT 'Current products' AS Product_status, COUNT(*) AS Number_of_products
+FROM Products
+WHERE Discontinued = 0
+UNION
+SELECT 'Discontinued products', COUNT(*)
+FROM Products
+WHERE Discontinued = 1
+
+--10 Stock less than quantity on order
+SELECT ProductName, UnitsOnOrder,UnitsInStock
+FROM Products
+WHERE UnitsInStock < UnitsOnOrder
+
+--11 Subtotal of each order
+SELECT OrderId, ROUND(SUM(UnitPrice- (UnitPrice*Discount)),2) AS Newprice,
+ROUND(SUM((UnitPrice- (UnitPrice*Discount))*Quantity),2) AS Sales
+FROM [Order Details]
+GROUP BY OrderId;
+
+
+--12 Employees sales amount by country
+SELECT  o.EmployeeID,Country AS Employee_Country,
+ROUND(SUM((UnitPrice- (UnitPrice*Discount))*Quantity),2) AS Sales
+FROM Orders AS o
+INNER JOIN [Order Details] AS od
+ON od.OrderID = o.OrderID
+INNER JOIN Employees AS e
+ON o.EmployeeID=e.EmployeeID
+GROUP BY  o.EmployeeID,e.Country
+order by  EmployeeID asc
+
+
+--13 List of products in alphabetical order
+SELECT ProductName
+FROM Products
+ORDER BY ProductName ASC;
+
+--14 Total sales by Category
+SELECT CategoryName,
+ROUND(SUM((od.UnitPrice- (od.UnitPrice*Discount))*Quantity),2) AS Sales
+FROM Products AS p
+INNER JOIN Categories AS c
+ON p.CategoryID=c.CategoryID
+INNER JOIN [Order Details] AS od
+ON od.ProductID=p.ProductID
+GROUP BY CategoryName
+
+--15 customers and suppliers by city
+
+SELECT 'Customer' AS Class, CompanyName,City
+FROM Customers
+UNION
+SELECT 'Supplier', CompanyName ,City
+FROM Suppliers
+ORDER BY City ASC
+

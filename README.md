@@ -30,13 +30,13 @@ To give Northwind traders a better undestanding of their operations, it is best 
 
 
 ## Exploartory Data Analysis
-### List of products per unit quantity
+### 1. List of products per unit quantity
 A total of 77 products were recorded at the start of the sales year.
 ```
 SELECT ProductName, QuantityPerUnit
 FROM Products
 ```
-### Current Product List
+### 2.Current Product List
 Presently, these are the products that are still being sold by Northwind traders.
 ```
 SELECT ProductID, ProductName
@@ -45,7 +45,7 @@ WHERE Discontinued = 0
 ORDER BY ProductID
 ```
 
-### Discontinued product list
+### 3. Discontinued product list
 A total of 8 products are no longer being supplied by Northwind traders.
 ```
 SELECT ProductID, ProductName
@@ -53,7 +53,7 @@ FROM Products
 WHERE Discontinued = 1
 ```
 
-### Most expensive and least expensive product
+### 4. Most expensive and least expensive product
 Identifying the most expensive and least expensive product gives insight on the sales perfomance of each product.
 ```
 SELECT 'Most expensive',  ProductName, UnitPrice
@@ -67,21 +67,21 @@ WHERE UnitPrice = (SELECT  MIN(UnitPrice)
 FROM Products)
 ORDER BY UnitPrice DESC
 ```
-### Products that cost less than $20
+### 5. Products that cost less than $20
 ```
 SELECT  ProductId, ProductName, UnitPrice
 FROM Products
 WHERE UnitPrice < 20
 ```
 
-### Products between $15 and $25
+### 6. Products between $15 and $25
 ```
 SELECT ProductId, ProductName, UnitPrice
 FROM Products
 WHERE UnitPrice BETWEEN 15 AND 25
 ORDER BY UnitPrice;
 ```
-### Products above average price
+### 7. Products above average price
 ```
 SELECT ProductName, UnitPrice
 FROM Products
@@ -92,14 +92,14 @@ WHERE UnitPrice > (
 ORDER BY UnitPrice;
 ```
 
-### Ten most expensive products
+### 8. Ten most expensive products
 ```
 SELECT TOP 10 ProductName, UnitPrice
 FROM Products
 ORDER BY UnitPrice DESC;
 ```
 
-### Current and discontinued products
+### 9. Current and discontinued products
 ```
 SELECT 'Current products' AS Product_status, COUNT(*) AS Number_of_products
 FROM Products
@@ -110,14 +110,14 @@ FROM Products
 WHERE Discontinued = 1
 ```
 
-### Stock less than quantity on order
+### 10. Stock less than quantity on order
 ```
 SELECT ProductName, UnitsOnOrder,UnitsInStock
 FROM Products
 WHERE UnitsInStock < UnitsOnOrder
 ```
 
-### Subtotal of each order
+### 11. Subtotal of each order
 ```
 SELECT OrderId, ROUND(SUM(UnitPrice- (UnitPrice*Discount)),2) AS Newprice,
 ROUND(SUM((UnitPrice- (UnitPrice*Discount))*Quantity),2) AS Sales
@@ -126,7 +126,7 @@ GROUP BY OrderId;
 
 ```
 
-### Employees sales amount by country
+### 12. Employees sales amount by country
 ```
 SELECT  o.EmployeeID,Country AS Employee_Country,
 ROUND(SUM((UnitPrice- (UnitPrice*Discount))*Quantity),2) AS Sales
@@ -139,14 +139,14 @@ GROUP BY  o.EmployeeID,e.Country
 order by  EmployeeID asc
 ```
 
-### List of products in alphabetical order
+### 13. List of products in alphabetical order
 ```
 SELECT ProductName
 FROM Products
 ORDER BY ProductName ASC;
 ```
 
-### Total sales by Category
+### 14. Total sales by Category
 ```
 SELECT CategoryName,
 ROUND(SUM((od.UnitPrice- (od.UnitPrice*Discount))*Quantity),2) AS Sales
@@ -158,7 +158,7 @@ ON od.ProductID=p.ProductID
 GROUP BY CategoryName
 ```
 
-### customers and suppliers by city
+### 15. Customers and suppliers by city
 ```
 SELECT 'Customer' AS Class, CompanyName,City
 FROM Customers
